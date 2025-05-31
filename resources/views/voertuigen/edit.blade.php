@@ -18,7 +18,7 @@
 <body>
     <div class="container">
         <h1 class="mb-4">Wijzigen voertuiggegevens</h1>
-        <h3 class="mb-3">Instructeur: {{ $instructeur->fullName }}</h3>
+        <h3 class="mb-3">Huidige Instructeur: {{ $instructeur->fullName }}</h3>
         
         <div class="form-container">
             <form action="{{ route('voertuig.update', $voertuigInstructeur->Id) }}" method="POST">
@@ -71,6 +71,21 @@
                     <label for="rijbewijscategorie" class="form-label">Rijbewijscategorie</label>
                     <input type="text" class="form-control" id="rijbewijscategorie" 
                            value="{{ $voertuig->typeVoertuig->Rijbewijscategorie }}" disabled>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="instructeur" class="form-label">Instructeur</label>
+                    <select class="form-select @error('InstructeurId') is-invalid @enderror" id="instructeur" name="InstructeurId" required>
+                        @foreach($instructeurs as $selectInstructeur)
+                            <option value="{{ $selectInstructeur->Id }}" 
+                                {{ old('InstructeurId', $instructeur->Id) == $selectInstructeur->Id ? 'selected' : '' }}>
+                                {{ $selectInstructeur->Voornaam }} {{ $selectInstructeur->Tussenvoegsel ? $selectInstructeur->Tussenvoegsel . ' ' : '' }}{{ $selectInstructeur->Achternaam }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('InstructeurId')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 
                 <div class="mt-4">
