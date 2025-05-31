@@ -13,6 +13,10 @@
         .form-container {
             max-width: 800px;
         }
+        .readonly-field {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -27,7 +31,7 @@
                 
                 <div class="mb-3">
                     <label for="typeVoertuig" class="form-label">Type Voertuig</label>
-                    <input type="text" class="form-control" id="typeVoertuig" name="TypeVoertuig" 
+                    <input type="text" class="form-control readonly-field" id="typeVoertuig" name="TypeVoertuig" 
                            value="{{ $voertuig->typeVoertuig->TypeVoertuig }}" disabled>
                 </div>
                 
@@ -50,9 +54,10 @@
                 </div>
                 
                 <div class="mb-3">
-                    <label for="bouwjaar" class="form-label">Bouwjaar</label>
-                    <input type="date" class="form-control" id="bouwjaar" name="Bouwjaar" 
-                           value="{{ \Carbon\Carbon::parse($voertuig->Bouwjaar)->format('Y-m-d') }}" disabled>
+                    <label for="bouwjaar" class="form-label">Bouwjaar <small class="text-muted">(niet wijzigbaar)</small></label>
+                    <input type="date" class="form-control readonly-field" id="bouwjaar" name="Bouwjaar" 
+                           value="{{ \Carbon\Carbon::parse($voertuig->Bouwjaar)->format('Y-m-d') }}" readonly>
+                    <small class="form-text text-muted">Dit veld kan niet worden gewijzigd.</small>
                 </div>
                 
                 <div class="mb-3">
@@ -69,7 +74,7 @@
                 
                 <div class="mb-3">
                     <label for="rijbewijscategorie" class="form-label">Rijbewijscategorie</label>
-                    <input type="text" class="form-control" id="rijbewijscategorie" 
+                    <input type="text" class="form-control readonly-field" id="rijbewijscategorie" 
                            value="{{ $voertuig->typeVoertuig->Rijbewijscategorie }}" disabled>
                 </div>
                 
@@ -89,5 +94,18 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Add JavaScript to ensure the read-only field cannot be modified
+        document.getElementById('bouwjaar').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Het veld "Bouwjaar" kan niet worden gewijzigd.');
+        });
+        
+        document.getElementById('bouwjaar').addEventListener('keydown', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
 </body>
 </html>

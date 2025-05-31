@@ -34,7 +34,7 @@ class VoertuigController extends Controller
         $voertuig = $voertuigInstructeur->voertuig;
         $originalInstructeurId = $voertuigInstructeur->InstructeurId;
 
-        // Update vehicle details
+        // Update vehicle details - notice Bouwjaar is not included
         $voertuig->update([
             'Type' => $request->Type,
             'Brandstof' => $request->Brandstof,
@@ -100,7 +100,7 @@ class VoertuigController extends Controller
         $voertuig = Voertuig::findOrFail($voertuigId);
         $instructeur = Instructeur::findOrFail($instructeurId);
 
-        // Update vehicle details
+        // Update vehicle details - notice Bouwjaar is not included
         $voertuig->update([
             'Type' => $request->Type,
             'Brandstof' => $request->Brandstof,
